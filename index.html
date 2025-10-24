@@ -100,6 +100,9 @@
       max-width: var(--container-max);
       margin: 0 auto;
       padding: 0 1rem;
+      
+      /* Allow logo overflow in header */
+      overflow: visible;
     }
 
     section {
@@ -165,6 +168,9 @@
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       transition: background 0.3s var(--ease);
+      
+      /* Allow logo to overflow header boundaries */
+      overflow: visible;
     }
 
     .nav-inner {
@@ -172,10 +178,13 @@
       align-items: center;
       justify-content: space-between;
       height: 100%;
-      padding: 0.25rem 0; /* Minimal padding to maximize logo size */
+      padding: 0; /* No padding - maximize space for large logo */
+      
+      /* Allow logo overflow */
+      overflow: visible;
     }
 
-    /* Logo container - maximizes logo size within fixed header height */
+    /* Logo container - allows logo to be 2x size while header stays same height */
     .logo {
       z-index: 1001;
       position: relative;
@@ -187,11 +196,13 @@
       text-decoration: none;
       outline: none;
       
-      /* Minimal padding to maximize logo size */
+      /* No padding - allow logo to overflow */
       padding: 0;
+      margin: 0;
       
-      /* Fill available height */
+      /* Fill available height but allow overflow */
       height: 100%;
+      overflow: visible;
     }
 
     /* Focus state for accessibility */
@@ -201,13 +212,13 @@
       border-radius: 4px;
     }
 
-    /* Logo image styling - LARGER size within same header height */
+    /* Logo image - DOUBLED SIZE (2x) while header stays at 80px */
     .logo img {
-      /* Desktop sizing - fills most of header height (80px) */
+      /* Desktop sizing - TWICE the original size (140px vs 70px) */
       height: auto;
-      max-height: 150px; /* Large but fits in 80px header */
+      max-height: 120px; /* 2x larger - extends beyond 80px header */
       width: auto;
-      max-width: 380px; /* Proportional to height */
+      max-width: 480px; /* Proportionally scaled */
       
       /* Maintain aspect ratio and prevent distortion */
       object-fit: contain;
@@ -215,6 +226,9 @@
       /* Remove default image styling */
       display: block;
       border: none;
+      
+      /* Center vertically even when overflowing */
+      margin: auto 0;
       
       /* High-resolution display optimization for crisp PNG */
       image-rendering: -webkit-optimize-contrast;
@@ -236,6 +250,10 @@
       /* Perfect vertical alignment */
       vertical-align: middle;
       align-self: center;
+      
+      /* Prevent any accidental clipping */
+      position: relative;
+      z-index: 1001;
     }
 
     /* Logo hover effect */
@@ -269,6 +287,10 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      
+      /* Ensure links stay above content */
+      position: relative;
+      z-index: 1002;
     }
 
     .nav-links a {
@@ -310,7 +332,7 @@
       border: none;
       cursor: pointer;
       padding: 0;
-      z-index: 1001;
+      z-index: 1002; /* Above logo */
       position: relative;
       transition: transform 0.3s var(--ease);
       
@@ -437,10 +459,11 @@
       }
     }
 
-    /* Tablet view - compact header with large logo */
+    /* Tablet view - DOUBLED logo size, same header height */
     @media (min-width: 769px) and (max-width: 1024px) {
       nav {
-        height: 75px; /* Compact */
+        height: 75px; /* Compact - UNCHANGED */
+        overflow: visible;
       }
 
       .nav-links {
@@ -451,43 +474,47 @@
         font-size: 0.9rem;
       }
       
-      /* Logo fills tablet header */
+      /* Logo DOUBLED - extends beyond 75px header */
       .logo img {
-        max-height: 65px; /* Large within 75px header */
-        max-width: 260px;
+        max-height: 110px; /* 2x from ~55px */
+        max-width: 440px;
       }
     }
 
-    /* Very small mobile devices - maintain compact header */
+    /* Very small mobile - DOUBLED logo, same compact header */
     @media (max-width: 480px) {
       nav {
-        height: 65px; /* Very compact */
+        height: 65px; /* Very compact - UNCHANGED */
+        overflow: visible;
       }
 
       .nav-inner {
-        padding: 0.25rem 0;
+        padding: 0;
+        overflow: visible;
       }
 
-      /* Smaller but still visible logo */
+      /* Logo DOUBLED */
       .logo img {
-        max-height: 55px; /* Large within 65px header */
-        max-width: 220px;
+        max-height: 80px; /* 2x from ~40px */
+        max-width: 320px;
       }
 
       .logo {
         padding: 0;
+        overflow: visible;
       }
     }
 
-    /* Large desktop - keep compact header, larger logo */
+    /* Large desktop - DOUBLED logo, minimal header increase */
     @media (min-width: 1400px) {
       nav {
-        height: 85px; /* Slightly larger for big screens */
+        height: 85px; /* Slightly larger - UNCHANGED */
+        overflow: visible;
       }
 
       .logo img {
-        max-height: 75px; /* Fills most of 85px header */
-        max-width: 300px;
+        max-height: 130px; /* 2x from ~65px */
+        max-width: 520px;
       }
     }
 
@@ -519,8 +546,8 @@
       /* Background */
       background: #000;
       
-      /* Account for compact navbar (80px) - ensures true vertical centering */
-      padding-top: var(--nav-height);
+      /* Account for compact navbar (80px) + extra space for overflowing logo */
+      padding-top: calc(var(--nav-height) + 30px); /* Extra 30px for logo overflow */
       padding-bottom: var(--nav-height);
     }
 
@@ -779,8 +806,8 @@
     /* Mobile adjustments */
     @media (max-width: 768px) {
       .hero {
-        /* Adjust for compact mobile navbar (70px) */
-        padding-top: 70px;
+        /* Adjust for compact mobile navbar (70px) + logo overflow */
+        padding-top: calc(70px + 20px); /* Extra 20px for logo overflow */
         padding-bottom: 2rem;
       }
 
@@ -827,7 +854,7 @@
     /* Very small mobile - hero adjustments */
     @media (max-width: 480px) {
       .hero {
-        padding-top: 65px; /* Match 65px navbar */
+        padding-top: calc(65px + 15px); /* Match 65px navbar + logo overflow */
       }
     }
 
@@ -1516,7 +1543,8 @@
   <nav role="navigation" aria-label="Main navigation">
     <div class="container">
       <div class="nav-inner">
-        <!-- Logo Image - Replaced text with image logo -->
+        <!-- Logo Image - DOUBLED SIZE (2x larger) while header stays compact -->
+        <!-- Logo extends beyond header boundaries (120px in 80px header) -->
         <a href="#" class="logo" aria-label="Haitian Hub Studio - Home">
           <img 
             src="https://i.imgur.com/fzLgo8J.png" 
