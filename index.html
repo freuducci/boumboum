@@ -175,14 +175,67 @@
       padding: 0;
     }
 
+    /* Logo container - replaced text with image */
     .logo {
-      font-size: 1.4rem;
-      font-weight: 900;
-      color: var(--color-red);
-      letter-spacing: -0.5px;
-      white-space: nowrap;
       z-index: 1001;
       position: relative;
+      display: flex;
+      align-items: center;
+      line-height: 0;
+      
+      /* Remove default link styling */
+      text-decoration: none;
+      outline: none;
+    }
+
+    /* Focus state for accessibility */
+    .logo:focus {
+      outline: 2px solid var(--color-red);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    /* Logo image styling */
+    .logo img {
+      /* Responsive sizing */
+      height: auto;
+      max-height: 50px;
+      width: auto;
+      max-width: 220px;
+      
+      /* Remove default image styling */
+      display: block;
+      border: none;
+      
+      /* High-resolution display optimization */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      
+      /* Smooth transitions */
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+      
+      /* Prevent image drag */
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+      
+      /* Ensure sharp rendering */
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      
+      /* Vertical alignment fine-tuning */
+      vertical-align: middle;
+    }
+
+    /* Logo hover effect */
+    .logo:hover img {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
+    /* Active state */
+    .logo:active img {
+      transform: scale(0.98);
     }
 
     /* Desktop Navigation */
@@ -366,6 +419,28 @@
 
       .nav-links a {
         font-size: 0.9rem;
+      }
+      
+      /* Slightly smaller logo on tablets */
+      .logo img {
+        max-height: 45px;
+        max-width: 200px;
+      }
+    }
+
+    /* Very small mobile devices */
+    @media (max-width: 480px) {
+      .logo img {
+        max-height: 35px;
+        max-width: 160px;
+      }
+    }
+
+    /* High-resolution displays (Retina, 4K) */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .logo img {
+        /* Ensures crisp rendering on high-DPI screens */
+        image-rendering: -webkit-optimize-contrast;
       }
     }
 
@@ -1379,7 +1454,14 @@
   <nav role="navigation" aria-label="Main navigation">
     <div class="container">
       <div class="nav-inner">
-        <div class="logo font-bebas">Haitian Hub Studio</div>
+        <!-- Logo Image - Replaced text with image logo -->
+        <a href="#" class="logo" aria-label="Haitian Hub Studio - Home">
+          <img 
+            src="https://i.imgur.com/fzLgo8J.png" 
+            alt="Haitian Hub Studio Logo"
+            loading="eager"
+          >
+        </a>
         
         <!-- Desktop & Mobile Navigation Links -->
         <ul class="nav-links" id="navLinks" role="menubar" aria-label="Main menu">
@@ -1920,8 +2002,16 @@
         anchor.addEventListener('click', function(e) {
           const targetId = this.getAttribute('href');
           
-          // Skip if href is just "#"
-          if (targetId === '#') return;
+          // Skip if href is just "#" (like logo home link)
+          if (targetId === '#') {
+            e.preventDefault();
+            // Scroll to top smoothly
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+            return;
+          }
           
           e.preventDefault();
           
