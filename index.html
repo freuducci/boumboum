@@ -1615,6 +1615,182 @@
       outline: 2px solid var(--color-red);
       outline-offset: 2px;
     }
+
+    /* ============================================
+       FLOATING WHATSAPP BUTTON
+       ============================================ */
+    .whatsapp-float {
+      /* Fixed positioning - bottom right corner */
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      
+      /* High z-index to appear above all content */
+      z-index: 1050;
+      
+      /* Circular button */
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      
+      /* WhatsApp brand color */
+      background: #25D366;
+      
+      /* Center icon inside button */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      /* Subtle shadow for depth */
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4),
+                  0 2px 4px rgba(0, 0, 0, 0.2);
+      
+      /* Smooth transitions */
+      transition: all 0.3s var(--ease);
+      
+      /* Remove default link styling */
+      text-decoration: none;
+      
+      /* Pointer cursor */
+      cursor: pointer;
+      
+      /* Respect safe areas on mobile devices */
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      right: calc(24px + env(safe-area-inset-right, 0px));
+      
+      /* Smooth animation on page load */
+      animation: whatsapp-fade-in 0.5s ease-out 0.5s both;
+    }
+
+    /* Icon container */
+    .whatsapp-float svg {
+      width: 36px;
+      height: 36px;
+      fill: #fff;
+      transition: transform 0.3s var(--ease);
+    }
+
+    /* Hover effect - desktop */
+    @media (hover: hover) {
+      .whatsapp-float:hover {
+        transform: scale(1.1) translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5),
+                    0 4px 8px rgba(0, 0, 0, 0.3);
+        background: #22c55e;
+      }
+      
+      .whatsapp-float:hover svg {
+        transform: scale(1.05);
+      }
+    }
+
+    /* Active/pressed state */
+    .whatsapp-float:active {
+      transform: scale(0.95);
+    }
+
+    /* Focus state for keyboard navigation */
+    .whatsapp-float:focus-visible {
+      outline: 3px solid var(--color-red);
+      outline-offset: 4px;
+    }
+
+    /* Pulse animation to draw attention */
+    @keyframes whatsapp-pulse {
+      0%, 100% {
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4),
+                    0 2px 4px rgba(0, 0, 0, 0.2),
+                    0 0 0 0 rgba(37, 211, 102, 0.7);
+      }
+      50% {
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4),
+                    0 2px 4px rgba(0, 0, 0, 0.2),
+                    0 0 0 12px rgba(37, 211, 102, 0);
+      }
+    }
+
+    /* Fade in animation on page load */
+    @keyframes whatsapp-fade-in {
+      from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Optional: Add pulse effect periodically */
+    .whatsapp-float {
+      animation: whatsapp-fade-in 0.5s ease-out 0.5s both,
+                 whatsapp-pulse 2s ease-in-out 3s infinite;
+    }
+
+    /* Mobile responsive sizing */
+    @media (max-width: 768px) {
+      .whatsapp-float {
+        /* Smaller button on mobile */
+        width: 56px;
+        height: 56px;
+        
+        /* Adjust spacing for mobile */
+        bottom: 16px;
+        right: 16px;
+        
+        /* Respect safe areas on mobile */
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        right: calc(16px + env(safe-area-inset-right, 0px));
+      }
+      
+      .whatsapp-float svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    /* Very small mobile devices */
+    @media (max-width: 480px) {
+      .whatsapp-float {
+        width: 52px;
+        height: 52px;
+        bottom: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        right: calc(12px + env(safe-area-inset-right, 0px));
+      }
+      
+      .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    /* Hide on print */
+    @media print {
+      .whatsapp-float {
+        display: none !important;
+      }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .whatsapp-float {
+        border: 2px solid #fff;
+      }
+    }
+
+    /* Reduced motion support for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .whatsapp-float {
+        animation: none;
+        transition: none;
+      }
+      
+      .whatsapp-float:hover {
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1975,6 +2151,29 @@
       <p>&copy; <span id="year"></span> Haitian Hub Studio. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <!-- Opens WhatsApp chat with preset message -->
+  <a 
+    href="https://wa.me/19547169675?text=Hello%2C%20I%27m%20interested%20in%20your%20services" 
+    class="whatsapp-float" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    aria-label="Chat with us on WhatsApp"
+    title="Chat with us on WhatsApp"
+  >
+    <!-- Screen reader only text for accessibility -->
+    <span class="sr-only">Open WhatsApp chat</span>
+    
+    <!-- WhatsApp icon SVG -->
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      aria-hidden="true"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
 
   <!-- JAVASCRIPT -->
   <script>
