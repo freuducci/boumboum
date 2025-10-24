@@ -103,6 +103,9 @@
       
       /* Allow logo overflow in header */
       overflow: visible;
+      
+      /* Full height in nav for proper centering */
+      height: 100%;
     }
 
     section {
@@ -173,36 +176,46 @@
       overflow: visible;
     }
 
+    /* CRITICAL: Vertical centering of all header elements */
     .nav-inner {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: center; /* Vertically center ALL children */
+      justify-content: space-between; /* Space between logo and nav */
       height: 100%;
-      padding: 0; /* No padding - maximize space for large logo */
+      padding: 0;
+      margin: 0;
       
-      /* Allow logo overflow */
+      /* Allow logo overflow but maintain alignment */
       overflow: visible;
+      
+      /* Remove any line-height interference */
+      line-height: 1;
     }
 
-    /* Logo container - allows logo to be 2x size while header stays same height */
+    /* Logo container - vertically centered even with overflow */
     .logo {
       z-index: 1001;
       position: relative;
       display: flex;
-      align-items: center;
-      line-height: 0;
+      align-items: center; /* Center logo image vertically */
+      justify-content: center;
       
       /* Remove default link styling */
       text-decoration: none;
       outline: none;
       
-      /* No padding - allow logo to overflow */
+      /* No padding/margin - clean centering */
       padding: 0;
       margin: 0;
       
-      /* Fill available height but allow overflow */
+      /* Match header height for proper centering */
       height: 100%;
+      
+      /* Allow logo to extend beyond bounds */
       overflow: visible;
+      
+      /* Remove line-height interference */
+      line-height: 0;
     }
 
     /* Focus state for accessibility */
@@ -212,25 +225,27 @@
       border-radius: 4px;
     }
 
-    /* Logo image - DOUBLED SIZE (2x) while header stays at 80px */
+    /* Logo image - DOUBLED SIZE with perfect vertical centering */
     .logo img {
-      /* Desktop sizing - TWICE the original size (140px vs 70px) */
+      /* Desktop sizing - 2x size extends beyond header */
       height: auto;
-      max-height: 120px; /* 2x larger - extends beyond 80px header */
+      max-height: 120px;
       width: auto;
-      max-width: 480px; /* Proportionally scaled */
+      max-width: 480px;
       
-      /* Maintain aspect ratio and prevent distortion */
+      /* Prevent distortion */
       object-fit: contain;
       
       /* Remove default image styling */
       display: block;
       border: none;
       
-      /* Center vertically even when overflowing */
-      margin: auto 0;
+      /* CRITICAL: Center the logo image itself */
+      /* The logo will overflow top/bottom equally from header center */
+      margin: 0;
+      padding: 0;
       
-      /* High-resolution display optimization for crisp PNG */
+      /* High-resolution display optimization */
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
       -webkit-font-smoothing: antialiased;
@@ -249,9 +264,8 @@
       
       /* Perfect vertical alignment */
       vertical-align: middle;
-      align-self: center;
       
-      /* Prevent any accidental clipping */
+      /* Position relative for z-index */
       position: relative;
       z-index: 1001;
     }
@@ -279,18 +293,25 @@
        All sizes maintain aspect ratio with height: auto
        ============================================ */
 
-    /* Desktop Navigation */
+    /* Desktop Navigation - vertically centered with logo */
     .nav-links {
       display: flex;
       gap: 2.2rem;
-      align-items: center;
+      align-items: center; /* CRITICAL: Vertical centering */
+      justify-content: center;
       list-style: none;
       margin: 0;
       padding: 0;
       
+      /* Match header height for centering */
+      height: 100%;
+      
       /* Ensure links stay above content */
       position: relative;
       z-index: 1002;
+      
+      /* Remove line-height interference */
+      line-height: normal;
     }
 
     .nav-links a {
@@ -300,6 +321,11 @@
       position: relative;
       padding: 0.5rem 0;
       transition: color 0.3s var(--ease);
+      
+      /* Ensure proper vertical alignment */
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
     }
 
     .nav-links a::after {
@@ -321,23 +347,28 @@
       width: 100%;
     }
 
-    /* Hamburger Menu Button */
+    /* Hamburger Menu Button - vertically centered with logo */
     .hamburger {
       display: none;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center; /* Center hamburger bars vertically */
+      align-items: center;
       width: 30px;
-      height: 22px;
+      height: 30px; /* Fixed height for proper centering */
       background: transparent;
       border: none;
       cursor: pointer;
       padding: 0;
+      margin: 0;
       z-index: 1002; /* Above logo */
       position: relative;
       transition: transform 0.3s var(--ease);
       
-      /* Ensure vertical centering with larger logo */
+      /* CRITICAL: Remove any default alignment */
       align-self: center;
+      
+      /* Remove line-height interference */
+      line-height: 0;
     }
 
     .hamburger:hover {
@@ -357,11 +388,23 @@
       border-radius: 2px;
       transition: all 0.3s var(--ease);
       transform-origin: center;
+      
+      /* Spacing between bars */
+      margin: 3px 0;
     }
 
-    /* Hamburger animation when open */
+    /* First and last span should have no extra margin */
+    .hamburger span:first-child {
+      margin-top: 0;
+    }
+
+    .hamburger span:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Hamburger animation when open - adjusted for new spacing */
     .hamburger.active span:nth-child(1) {
-      transform: translateY(9.5px) rotate(45deg);
+      transform: translateY(9px) rotate(45deg);
     }
 
     .hamburger.active span:nth-child(2) {
@@ -370,7 +413,7 @@
     }
 
     .hamburger.active span:nth-child(3) {
-      transform: translateY(-9.5px) rotate(-45deg);
+      transform: translateY(-9px) rotate(-45deg);
     }
 
     /* Mobile Menu Overlay */
@@ -400,9 +443,10 @@
         font-size: 1.2rem;
       }
 
-      /* Show hamburger on mobile */
+      /* Show hamburger on mobile - vertically centered */
       .hamburger {
         display: flex;
+        align-self: center; /* Ensure vertical centering with logo */
       }
 
       /* Mobile menu styles */
@@ -417,7 +461,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        padding: 90px 2rem 2rem; /* Adjusted for 70px mobile header */
+        padding: 90px 2rem 2rem;
         gap: 0;
         transform: translateX(100%);
         transition: transform 0.4s var(--ease);
@@ -438,6 +482,8 @@
         font-size: 1.1rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         transition: all 0.3s var(--ease);
+        display: flex;
+        align-items: center;
       }
 
       .nav-links a:hover {
@@ -459,61 +505,94 @@
       }
     }
 
-    /* Tablet view - DOUBLED logo size, same header height */
+    /* Tablet view - vertically centered logo and nav */
     @media (min-width: 769px) and (max-width: 1024px) {
       nav {
-        height: 75px; /* Compact - UNCHANGED */
+        height: 75px;
         overflow: visible;
+      }
+
+      .nav-inner {
+        align-items: center; /* Maintain centering */
       }
 
       .nav-links {
         gap: 1.5rem;
+        height: 100%; /* Match header for centering */
       }
 
       .nav-links a {
         font-size: 0.9rem;
       }
       
-      /* Logo DOUBLED - extends beyond 75px header */
+      /* Logo centered within header */
+      .logo {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
       .logo img {
-        max-height: 110px; /* 2x from ~55px */
+        max-height: 110px;
         max-width: 440px;
       }
     }
 
-    /* Very small mobile - DOUBLED logo, same compact header */
+    /* Very small mobile - maintain perfect centering */
     @media (max-width: 480px) {
       nav {
-        height: 65px; /* Very compact - UNCHANGED */
+        height: 65px;
         overflow: visible;
       }
 
       .nav-inner {
         padding: 0;
+        margin: 0;
         overflow: visible;
+        align-items: center; /* Maintain centering */
       }
 
-      /* Logo DOUBLED */
+      /* Logo centered */
+      .logo {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
       .logo img {
-        max-height: 80px; /* 2x from ~40px */
+        max-height: 80px;
         max-width: 320px;
       }
 
-      .logo {
-        padding: 0;
-        overflow: visible;
+      /* Hamburger centered */
+      .hamburger {
+        align-self: center;
       }
     }
 
-    /* Large desktop - DOUBLED logo, minimal header increase */
+    /* Large desktop - maintain perfect centering */
     @media (min-width: 1400px) {
       nav {
-        height: 85px; /* Slightly larger - UNCHANGED */
+        height: 85px;
         overflow: visible;
       }
 
+      .nav-inner {
+        align-items: center; /* Maintain centering */
+      }
+
+      .nav-links {
+        height: 100%; /* Match header for centering */
+      }
+
+      .logo {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
       .logo img {
-        max-height: 130px; /* 2x from ~65px */
+        max-height: 130px;
         max-width: 520px;
       }
     }
