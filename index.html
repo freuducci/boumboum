@@ -77,7 +77,7 @@
       --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
       --container-width: 90%;
       --container-max: 1400px;
-      --nav-height: 70px;
+      --nav-height: 100px; /* Increased for larger logo */
     }
 
     /* ============================================
@@ -172,10 +172,10 @@
       align-items: center;
       justify-content: space-between;
       height: 100%;
-      padding: 0;
+      padding: 0.75rem 0; /* Increased padding for larger logo */
     }
 
-    /* Logo container - replaced text with image */
+    /* Logo container - larger size for better visibility */
     .logo {
       z-index: 1001;
       position: relative;
@@ -186,6 +186,9 @@
       /* Remove default link styling */
       text-decoration: none;
       outline: none;
+      
+      /* Add breathing room around logo */
+      padding: 0.5rem 0;
     }
 
     /* Focus state for accessibility */
@@ -195,13 +198,13 @@
       border-radius: 4px;
     }
 
-    /* Logo image styling */
+    /* Logo image styling - INCREASED SIZE for prominence */
     .logo img {
-      /* Responsive sizing */
+      /* Desktop sizing - larger and more visible */
       height: auto;
-      max-height: 50px;
+      max-height: 160px; /* Increased from 50px */
       width: auto;
-      max-width: 220px;
+      max-width: 500px; /* Increased from 220px */
       
       /* Remove default image styling */
       display: block;
@@ -237,6 +240,18 @@
     .logo:active img {
       transform: scale(0.98);
     }
+
+    /* ============================================
+       LOGO SIZING SUMMARY (Responsive Breakpoints)
+       ============================================
+       Desktop (>1400px):   180px × 550px max
+       Desktop (1024-1400): 160px × 500px max
+       Tablet (769-1024):   140px × 420px max
+       Mobile (481-768):    120px × 350px max
+       Small (<480px):      100px × 300px max
+       
+       All sizes maintain aspect ratio with height: auto
+       ============================================ */
 
     /* Desktop Navigation */
     .nav-links {
@@ -290,6 +305,9 @@
       z-index: 1001;
       position: relative;
       transition: transform 0.3s var(--ease);
+      
+      /* Ensure vertical centering with larger logo */
+      align-self: center;
     }
 
     .hamburger:hover {
@@ -369,7 +387,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        padding: calc(var(--nav-height) + 2rem) 2rem 2rem;
+        padding: 100px 2rem 2rem; /* Adjusted top padding for larger mobile nav */
         gap: 0;
         transform: translateX(100%);
         transition: transform 0.4s var(--ease);
@@ -411,8 +429,12 @@
       }
     }
 
-    /* Tablet view - keep desktop menu */
+    /* Tablet view - keep desktop menu, adjust logo */
     @media (min-width: 769px) and (max-width: 1024px) {
+      nav {
+        height: 90px; /* Slightly smaller for tablets */
+      }
+
       .nav-links {
         gap: 1.5rem;
       }
@@ -421,18 +443,43 @@
         font-size: 0.9rem;
       }
       
-      /* Slightly smaller logo on tablets */
+      /* Medium logo on tablets */
       .logo img {
-        max-height: 45px;
-        max-width: 200px;
+        max-height: 140px; /* Increased from 45px */
+        max-width: 420px; /* Increased from 200px */
       }
     }
 
     /* Very small mobile devices */
     @media (max-width: 480px) {
+      nav {
+        min-height: 70px;
+      }
+
+      .nav-inner {
+        padding: 0.5rem 0;
+      }
+
+      /* Smaller but still visible logo */
       .logo img {
-        max-height: 35px;
-        max-width: 160px;
+        max-height: 100px; /* Increased from 35px */
+        max-width: 300px; /* Increased from 160px */
+      }
+
+      .logo {
+        padding: 0.25rem 0;
+      }
+    }
+
+    /* Large desktop - optimal sizing */
+    @media (min-width: 1400px) {
+      nav {
+        height: 110px; /* Extra room for large screens */
+      }
+
+      .logo img {
+        max-height: 180px; /* Even larger on big screens */
+        max-width: 550px;
       }
     }
 
@@ -464,7 +511,7 @@
       /* Background */
       background: #000;
       
-      /* Account for fixed navbar - ensures true vertical centering */
+      /* Account for fixed navbar (100px) - ensures true vertical centering */
       padding-top: var(--nav-height);
       padding-bottom: var(--nav-height);
     }
@@ -724,8 +771,8 @@
     /* Mobile adjustments */
     @media (max-width: 768px) {
       .hero {
-        /* Adjust for mobile navbar */
-        padding-top: calc(var(--nav-height) + 1rem);
+        /* Adjust for mobile navbar (80px) */
+        padding-top: 80px;
         padding-bottom: 2rem;
       }
 
@@ -766,6 +813,13 @@
 
       .hero-stats strong {
         font-size: 1.6rem;
+      }
+    }
+
+    /* Very small mobile - hero adjustments */
+    @media (max-width: 480px) {
+      .hero {
+        padding-top: 70px; /* Match smaller navbar */
       }
     }
 
